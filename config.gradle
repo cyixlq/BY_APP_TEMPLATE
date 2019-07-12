@@ -28,15 +28,19 @@ ext {
     ]
     //依赖第三方配置
     dependencies = [
-            'rxjava'            : "io.reactivex.rxjava2:rxjava:2.2.10",
-            'rxkotlin'          : "io.reactivex.rxjava2:rxkotlin:2.3.0",
-            'retrofit'          : "com.squareup.retrofit2:retrofit:2.6.0",
-            'rxandroid'         : 'io.reactivex.rxjava2:rxandroid:2.1.1',
-            'okhttp'            : "com.squareup.okhttp3:okhttp:3.14.2",
-            'adapterRxJava'     : "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
-            'scalarsConvert'    : 'com.squareup.retrofit2:converter-scalars:2.6.0',
-            'gson'              : 'com.google.code.gson:gson:2.8.5',
-            'loggingInterceptor': 'com.squareup.okhttp3:logging-interceptor:4.0.0'
+            'rxjava'               : "io.reactivex.rxjava2:rxjava:2.2.10",
+            'rxkotlin'             : "io.reactivex.rxjava2:rxkotlin:2.3.0",
+            'retrofit'             : "com.squareup.retrofit2:retrofit:2.6.0",
+            'rxandroid'            : 'io.reactivex.rxjava2:rxandroid:2.1.1',
+            'okhttp'               : "com.squareup.okhttp3:okhttp:3.14.2",
+            'adapterRxJava'        : "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
+            'scalarsConvert'       : 'com.squareup.retrofit2:converter-scalars:2.6.0',
+            'gson'                 : 'com.google.code.gson:gson:2.8.5',
+            'loggingInterceptor'   : 'com.squareup.okhttp3:logging-interceptor:4.0.0',
+            'autodispose'          : 'com.uber.autodispose:autodispose-android:1.1.0',
+            'autodisposeKtx'       : 'com.uber.autodispose:autodispose-ktx:1.1.0',
+            'autodisposeAndroidKtx': 'com.uber.autodispose:autodispose-android-ktx:1.1.0',
+            'autodisposeArchsKtx'  : 'com.uber.autodispose:autodispose-android-archcomponents-ktx:1.1.0'
     ]
 }
 
