@@ -10,9 +10,4 @@ abstract class BaseActivity : AutoDisposeActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
     }
-
-    /**
-     * 进行VM与View状态绑定
-     */
-    abstract fun binds()
 }

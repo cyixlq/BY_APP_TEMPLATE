@@ -1,14 +1,15 @@
 package top.cyixlq.network
 
+import com.google.gson.reflect.TypeToken
+import io.reactivex.Flowable
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import top.cyixlq.network.bean.BaseResponse
 import top.cyixlq.network.config.API_VERSION
-import top.cyixlq.network.config.CLIENT_ID
+import top.cyixlq.network.config.RESULT_OK
 import top.cyixlq.network.config.SERVICE_ERR
 import top.cyixlq.network.exception.CustomNetException
-import top.cyixlq.network.service.CommanService
+import top.cyixlq.network.utils.CLog
 import top.cyixlq.network.utils.FormatUtil
 
 class RetrofitClient private constructor() {
@@ -43,26 +44,82 @@ class RetrofitClient private constructor() {
         return this
     }
 
-    fun execute(): Observable<String> {
-        if (type == null) {
+    private fun getData(): HashMap<String, Any> {
+        if (type == null)
             throw RuntimeException("You must set the api type")
-        }
-        val gson = FormatUtil.getInstance().getGson()
-        val data = HashMap<String, Any>()
-        data["client_id"] = CLIENT_ID
-        data["itboye"] = NetWorkManager.getInstance().getConvert().encodeData(params, type!!, apiVersion)
-        val service = RetrofitManager.getInstance().create(CommanService::class.java)
-        val observable = service.post(data)
-        return observable
-            .observeOn(AndroidSchedulers.mainThread())
+        return NetWorkManager.getInstance().getConvert().encodeData(params, type!!, apiVersion)
+    }
+
+    /**
+     *  返回Observable部分方法重载
+     */
+    fun <T> executeObservable(clazz: Class<T>): Observable<T> {
+        return executeObservable(clazz = clazz, typeToken = null)
+    }
+
+    fun <T> executeObservable(typeToken: TypeToken<T>): Observable<T> {
+        return executeObservable(clazz = null, typeToken = typeToken)
+    }
+
+    private fun <T> executeObservable(clazz: Class<T>? = null, typeToken: TypeToken<T>? = null): Observable<T> {
+        return NetWorkManager.getInstance().getCommonService().post(getData())
             .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
             .map {
-                gson.fromJson<BaseResponse>(it, BaseResponse::class.java)
-            }.flatMap {
-                val obj = it.data as? String ?: throw CustomNetException(SERVICE_ERR, it.msg)
-                val json = NetWorkManager.getInstance().getConvert().decodeData(obj)
-                Observable.just(json)
+                val baseResponse = FormatUtil.getGson().fromJson(it, BaseResponse::class.java)
+                if (baseResponse.code != RESULT_OK) {
+                    throw CustomNetException(baseResponse.code, baseResponse.msg)
+                }
+                baseResponse
+            }
+            .map {
+                val result = it.data as? String ?: throw CustomNetException(SERVICE_ERR, it.msg)
+                val decodeString = NetWorkManager.getInstance().getConvert().decodeData(result)
+                CLog.json("NetWork", decodeString)
+                if (clazz != null) {
+                    return@map FormatUtil.getGson().fromJson<T>(decodeString, clazz)
+                }
+                else {
+                    if (typeToken == null) {
+                        throw RuntimeException("At least one of clazz and typeToken is not null")
+                    }
+                    return@map FormatUtil.getGson().fromJson<T>(decodeString, typeToken.type)
+                }
+            }
+    }
+
+    /**
+     *  返回Flowable部分方法重载
+     */
+    fun <T> executeFlowable(clazz: Class<T>): Flowable<T> {
+        return executeFlowable(clazz = clazz, typeToken = null)
+    }
+
+    fun <T> executeFlowable(typeToken: TypeToken<T>): Flowable<T> {
+        return executeFlowable(clazz = null, typeToken = typeToken)
+    }
+
+    private fun <T> executeFlowable(clazz: Class<T>? = null, typeToken: TypeToken<T>? = null): Flowable<T> {
+        return NetWorkManager.getInstance().getCommonService().postFlowable(getData())
+            .subscribeOn(Schedulers.io())
+            .map {
+                val baseResponse = FormatUtil.getGson().fromJson(it, BaseResponse::class.java)
+                if (baseResponse.code != RESULT_OK) {
+                    throw CustomNetException(baseResponse.code, baseResponse.msg)
+                }
+                baseResponse
+            }
+            .map {
+                val result = it.data as? String ?: throw CustomNetException(SERVICE_ERR, it.msg)
+                val decodeString = NetWorkManager.getInstance().getConvert().decodeData(result)
+                CLog.json("NetWork", decodeString)
+                if (clazz != null) {
+                    return@map FormatUtil.getGson().fromJson<T>(decodeString, clazz)
+                } else {
+                    if (typeToken == null) {
+                        throw RuntimeException("At least one of clazz and typeToken is not null")
+                    }
+                    return@map FormatUtil.getGson().fromJson<T>(decodeString, typeToken.type)
+                }
             }
     }
 }

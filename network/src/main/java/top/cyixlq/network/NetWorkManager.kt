@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import top.cyixlq.network.convert.IConvert
 import top.cyixlq.network.convert.SampleConvert
+import top.cyixlq.network.service.CommonService
 import top.cyixlq.network.utils.CLog
 
 
@@ -18,6 +19,8 @@ class NetWorkManager private constructor(){
             return SingleHolder.instance
         }
     }
+
+    private var commonService: CommonService = RetrofitManager.getInstance().create(CommonService::class.java)
 
     private var convert: IConvert? = null
     private var application: Application? = null
@@ -72,5 +75,9 @@ class NetWorkManager private constructor(){
 
     fun getVersionName(): String {
         return this.version
+    }
+
+    fun getCommonService(): CommonService {
+        return commonService
     }
 }

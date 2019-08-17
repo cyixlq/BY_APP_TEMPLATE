@@ -41,7 +41,7 @@ public class NetSecurityUtil {
      * @return 加密后的第二阶段参数字符串
      */
     public static String desEncodeUserParam(Map<String, Object> data, String secret) {
-        String jsonParam = FormatUtil.getInstance().getGson().toJson(data);
+        String jsonParam = FormatUtil.INSTANCE.getGson().toJson(data);
         return encode(jsonParam, secret);
     }
 
@@ -79,7 +79,7 @@ public class NetSecurityUtil {
      * @return 加密信息后的参数字符串
      */
     public static String dataEncrypt(Map<String, Object> data) {
-        String jsonStr = FormatUtil.getInstance().getGson().toJson(data);
+        String jsonStr = FormatUtil.INSTANCE.getGson().toJson(data);
         String Base64Str = new String(Base64.encode(jsonStr.getBytes(), Base64.NO_WRAP));
         return new String(Base64.encode(Base64Str.getBytes(), Base64.NO_WRAP));
     }

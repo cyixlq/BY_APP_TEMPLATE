@@ -15,6 +15,6 @@ object CommonManager {
         application?.let {
             return it
         }
-        throw RuntimeException("You must init UtilManager")
+        throw RuntimeException("You must init CommonManager")
     }
 }

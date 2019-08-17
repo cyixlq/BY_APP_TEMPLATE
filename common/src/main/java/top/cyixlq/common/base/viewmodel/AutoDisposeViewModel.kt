@@ -22,8 +22,7 @@ import com.uber.autodispose.lifecycle.LifecycleScopeProvider
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
-open class AutoDisposeViewModel : ViewModel(), IViewModel,
-        LifecycleScopeProvider<AutoDisposeViewModel.ViewModelEvent> {
+open class AutoDisposeViewModel : ViewModel(), IViewModel, LifecycleScopeProvider<AutoDisposeViewModel.ViewModelEvent> {
 
 
     // 自动处理订阅

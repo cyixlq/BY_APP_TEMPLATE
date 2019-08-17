@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -22,6 +24,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     implementation rootProject.ext.support.kotlin
     implementation rootProject.ext.support.appcompat
+    api rootProject.ext.support.lifecycleExtensions
     api rootProject.ext.dependencies.autodispose
     api rootProject.ext.dependencies.autodisposeKtx
     api rootProject.ext.dependencies.autodisposeAndroidKtx

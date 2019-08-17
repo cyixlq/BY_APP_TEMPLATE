@@ -1,6 +1,6 @@
 package top.cyixlq.network.convert
 
 interface IConvert {
-    fun encodeData(data: HashMap<String, Any>, type: String, apiVersion: String): String
+    fun encodeData(data: Map<String, Any>, vararg attach: String): HashMap<String, Any>
     fun decodeData(result: String): String
 }

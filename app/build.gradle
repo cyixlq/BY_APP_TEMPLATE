@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -32,11 +30,11 @@ dependencies {
     implementation rootProject.ext.support.constraintLayout
     implementation rootProject.ext.support.kotlin
     implementation rootProject.ext.support.ktx
+    implementation project(path: ':common')
     implementation project(path: ':network')
 
     // 测试用包
     testImplementation rootProject.ext.support.junit
     androidTestImplementation rootProject.ext.support.runner
     androidTestImplementation rootProject.ext.support.espresso
-    implementation project(path: ':common')
 }

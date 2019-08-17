@@ -1,6 +1,7 @@
 package top.cyixlq.common.utils
 
 import android.widget.Toast
+import androidx.annotation.StringRes
 import top.cyixlq.common.CommonManager
 
 object ToastUtil {
@@ -8,11 +9,11 @@ object ToastUtil {
         Toast.makeText(CommonManager.getApplication(), text, Toast.LENGTH_SHORT).show()
     }
 
-    fun showShort(stringId: Int) {
+    fun showShort(@StringRes stringId: Int) {
         Toast.makeText(CommonManager.getApplication(), stringId, Toast.LENGTH_SHORT).show()
     }
 
-    fun showLong(stringId: Int) {
+    fun showLong(@StringRes stringId: Int) {
         Toast.makeText(CommonManager.getApplication(), stringId, Toast.LENGTH_LONG).show()
     }
 

@@ -11,9 +11,7 @@ abstract class BaseFragment : AutoDisposeFragment() {
 
     abstract val layoutId: Int
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mRootView = LayoutInflater.from(context).inflate(layoutId, container, false)
         return mRootView!!
     }

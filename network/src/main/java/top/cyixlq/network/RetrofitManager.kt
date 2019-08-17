@@ -24,9 +24,13 @@ class RetrofitManager private constructor() {
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
         .addNetworkInterceptor(
             HttpLoggingInterceptor(InterceptorLogger()).apply {
-                level = HttpLoggingInterceptor.Level.BODY
+                level = if (BuildConfig.DEBUG)
+                    HttpLoggingInterceptor.Level.BODY
+                else
+                    HttpLoggingInterceptor.Level.NONE
             }
         )
+        .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
         .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
         .writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS)
         .build()
