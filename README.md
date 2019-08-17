@@ -7,12 +7,16 @@
 按需引入library，分为common模块和network模块。如果项目没有用到像ebuy这种层层加密网络请求方式，那么只需依赖common模块即可。
 
 **模块初始化：**
-1. 引入了common模块，在自定义的Application中的onCreate方法加入以下代码：
-CommonManager.init(this)
-2. 引入了network模块，在自定义的Application中的onCreate方法加入以下代码：
-NetWorkManager.getInstance().setEnableLog(BuildConfig.DEBUG).init(this)
-其中setEnableLog方法是开启网络日志的开关，true为开，false为关
-另外，setConvert方法未展示，其作用是自定义参数加密解密的转换器，如果未设置将使用默认的转换器，其相关加密解密方法参照ebuy项目。如果需要自己设计实现，请参考network模块中的SampleConvert。
+1. 如果引入了common模块，在自定义的Application中的onCreate方法加入以下代码：
+    ```
+    CommonManager.init(this)
+    ```
+2. 如果引入了network模块，在自定义的Application中的onCreate方法加入以下代码：
+    ```
+    NetWorkManager.getInstance().setEnableLog(BuildConfig.DEBUG).init(this)
+    ```
+    其中setEnableLog方法是开启网络日志的开关，true为开，false为关
+    另外，setConvert方法未展示，其作用是自定义参数加密解密的转换器，如果未设置将使用默认的转换器，其相关加密解密方法参照ebuy项目。如果需要自己设计实现，请参考network模块中的SampleConvert。
 
 **防止RxJava内存泄漏：**
 
