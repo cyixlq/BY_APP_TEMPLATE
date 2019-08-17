@@ -15,7 +15,8 @@
     ```
     NetWorkManager.getInstance().setEnableLog(BuildConfig.DEBUG).init(this)
     ```
-    其中setEnableLog方法是开启网络日志的开关，true为开，false为关
+    其中setEnableLog方法是开启网络日志的开关，true为开，false为关。
+
     另外，setConvert方法未展示，其作用是自定义参数加密解密的转换器，如果未设置将使用默认的转换器，其相关加密解密方法参照ebuy项目。如果需要自己设计实现，请参考network模块中的SampleConvert。
 
 **防止RxJava内存泄漏：**
