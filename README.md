@@ -55,7 +55,7 @@ common模块引入了AutoDispose框架，在生命周期结束而自动断开与
     ```
     val testFragment = TestFragment()
     ```
-    应当在要创建的Fragment自身提供静态instance方法，正例：
+    应当使用要创建的Fragment自身提供静态instance方法，正例：
     ```
     class TestFragment: Fragment() {
         companion object {
