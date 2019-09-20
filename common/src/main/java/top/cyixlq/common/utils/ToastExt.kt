@@ -7,3 +7,11 @@ fun String.toastShort() {
 fun String.toastLong() {
     ToastUtil.showLong(this)
 }
+
+fun Int.toastShort() {
+    ToastUtil.showShort(this)
+}
+
+fun Int.toastLong() {
+    ToastUtil.showLong(this)
+}
