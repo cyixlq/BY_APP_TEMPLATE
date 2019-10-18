@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_test.*
 import top.cyixlq.byapptemplate.R
 import top.cyixlq.byapptemplate.fragment.TestFragment
-import top.cyixlq.common.base.activity.BaseActivity
-import top.cyixlq.common.utils.toastShort
+import top.cyixlq.core.base.activity.BaseActivity
+import top.cyixlq.core.utils.toastShort
 
 class TestActivity : BaseActivity() {
 

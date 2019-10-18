@@ -1,14 +1,16 @@
 package top.cyixlq.byapptemplate
 
 import android.app.Application
-import top.cyixlq.common.CommonManager
-import top.cyixlq.network.NetWorkManager
+import top.cyixlq.core.CoreManager
+import top.cyixlq.network.ByNetWorkManager
+
 
 class MyApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        CommonManager.init(this)
-        NetWorkManager.getInstance().setEnableLog(BuildConfig.DEBUG).init(this)
+        CoreManager.init(this).configNetWork(baseUrl = "http://api.ebuycambodia.com")
+            .configCLog(isEnableLog = true, showThreadInfo = false)
+        ByNetWorkManager.getInstance().init()
     }
 }

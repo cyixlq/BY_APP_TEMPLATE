@@ -2,7 +2,7 @@ package top.cyixlq.byapptemplate.test
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import top.cyixlq.common.base.viewmodel.BaseViewModel
+import top.cyixlq.core.base.viewmodel.BaseViewModel
 
 @SuppressWarnings("checkResult")
 class TestViewModel(private val repo: TestDataSourceRepository) : BaseViewModel()

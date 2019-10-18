@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.uber.autodispose.autoDisposable
 import top.cyixlq.byapptemplate.bean.AddressItem
 import top.cyixlq.byapptemplate.bean.VersionData
-import top.cyixlq.common.base.viewmodel.BaseViewModel
+import top.cyixlq.core.base.viewmodel.BaseViewModel
 import top.cyixlq.byapptemplate.bean.Result
 
 class MainViewModel(private val repo: MainRepository): BaseViewModel() {
@@ -52,6 +52,23 @@ class MainViewModel(private val repo: MainRepository): BaseViewModel() {
                     mViewStateSubject.postValue(MainViewState.create(isLoading = false))
                 }
             )
+    }
+
+    fun getMusicData() {
+        repo.getMusicData()
+            .startWith(Result.loading())
+            .autoDisposable(this)
+            .subscribe {
+                when(it) {
+                    is Result.Success -> {
+                        mViewStateSubject.postValue(MainViewState.create(isLoading = false, musicUrl = it.data.string()))
+                    }
+                    is Result.Failure -> {
+                        mViewStateSubject.postValue(MainViewState.create(isLoading = false, throwable = it.error))
+                    }
+                    is Result.Loading -> mViewStateSubject.postValue(MainViewState.create(isLoading = true))
+                }
+            }
     }
 }
 

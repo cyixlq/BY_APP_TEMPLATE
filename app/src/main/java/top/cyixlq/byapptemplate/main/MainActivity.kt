@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_main.*
 import top.cyixlq.byapptemplate.R
 import top.cyixlq.byapptemplate.test.TestActivity
-import top.cyixlq.common.base.activity.BaseActivity
-import top.cyixlq.common.utils.toastShort
+import top.cyixlq.core.base.activity.BaseActivity
+import top.cyixlq.core.utils.toastShort
 
 class MainActivity : BaseActivity() {
 
@@ -26,6 +26,7 @@ class MainActivity : BaseActivity() {
             // 坚决不能自己创建一个Intent进行跳转
             TestActivity.launch(this, "来自MainActivity的消息")
         }
+        btnGetMusicData.setOnClickListener { mViewModel.getMusicData() }
         binds()
     }
 
@@ -42,6 +43,9 @@ class MainActivity : BaseActivity() {
             }
             if (it.versionData != null) {
                 tvVersionData.text = it.versionData.desc
+            }
+            if (it.musicUrl != null) {
+                tvMusicUrl.text = it.musicUrl
             }
             if (it.throwable != null) {
                 it.throwable.localizedMessage.toastShort()

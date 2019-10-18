@@ -25,6 +25,13 @@
             android:text="前往Test页面"
             tools:ignore="HardcodedText" />
 
+        <Button
+            android:id="@+id/btnGetMusicData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取音乐地址"
+            tools:ignore="HardcodedText" />
+
         <TextView
             android:id="@+id/tvVersionData"
             android:layout_width="wrap_content"
@@ -34,6 +41,11 @@
             android:id="@+id/tvAddressList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvMusicUrl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <ProgressBar

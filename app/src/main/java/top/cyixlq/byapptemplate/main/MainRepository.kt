@@ -1,11 +1,15 @@
 package top.cyixlq.byapptemplate.main
 
 import io.reactivex.Flowable
+import okhttp3.ResponseBody
+import top.cyixlq.byapptemplate.api.MusicService
 import top.cyixlq.byapptemplate.bean.AddressItem
 import top.cyixlq.byapptemplate.bean.VersionData
 import top.cyixlq.network.RetrofitClient
 import top.cyixlq.network.utils.getTypeToken
 import top.cyixlq.byapptemplate.bean.Result
+import top.cyixlq.core.utils.RxSchedulers
+import top.cyixlq.core.net.RetrofitManager
 
 class MainRepository(
     private val remote: MainRemoteDataSource = MainRemoteDataSource(),
@@ -17,6 +21,10 @@ class MainRepository(
             remote.getVersionData(),
             remote.getAddressList(sid)
         )
+    }
+
+    fun getMusicData(): Flowable<Result<ResponseBody>> {
+        return remote.getMusicData()
     }
 }
 
@@ -35,6 +43,16 @@ class MainRemoteDataSource {
             .setType("BY_Config_version")
             .addParam("appid", "by565fa4facdb191")
             .executeFlowable(VersionData::class.java)
+            .map { Result.success(it) }
+            .onErrorReturn { Result.failure(it) }
+    }
+
+    fun getMusicData(): Flowable<Result<ResponseBody>> {
+        return RetrofitManager.getInstance().create(MusicService::class.java)
+            .getMusicData("001qvvgF38HVc4", "qq",
+                "fun_get_music_url", "flac", "mkfsldlf", "fmosd")
+            .observeOn(RxSchedulers.io)
+            .subscribeOn(RxSchedulers.io)
             .map { Result.success(it) }
             .onErrorReturn { Result.failure(it) }
     }

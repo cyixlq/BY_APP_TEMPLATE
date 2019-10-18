@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_test.*
-import top.cyixlq.common.base.fragment.BaseFragment
+import top.cyixlq.core.base.fragment.BaseFragment
 import top.cyixlq.byapptemplate.R
 
 class TestFragment : BaseFragment() {
