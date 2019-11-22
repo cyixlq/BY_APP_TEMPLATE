@@ -2,6 +2,7 @@ package top.cyixlq.byapptemplate.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_test.*
 import top.cyixlq.core.base.fragment.BaseFragment
@@ -21,10 +22,18 @@ class TestFragment : BaseFragment() {
         if (title != null) {
             tvTitle.text = title
         }
+        button.setOnClickListener { mViewModel.getVersionDataNew() }
         binds()
     }
 
     private fun binds() {
+        mViewModel.mViewState.observe(this, Observer {
+            progressBar.visibility = if (it.isLoading) View.VISIBLE else View.INVISIBLE
+            if (it.versionData != null)
+                tvTitle.text = it.versionData.desc
+            if (it.throwable != null)
+                tvTitle.text = it.throwable.localizedMessage
+        })
     }
 
     companion object {

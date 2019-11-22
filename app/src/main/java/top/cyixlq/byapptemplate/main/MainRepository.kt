@@ -4,12 +4,12 @@ import io.reactivex.Flowable
 import okhttp3.ResponseBody
 import top.cyixlq.byapptemplate.api.MusicService
 import top.cyixlq.byapptemplate.bean.AddressItem
+import top.cyixlq.byapptemplate.bean.Result
 import top.cyixlq.byapptemplate.bean.VersionData
+import top.cyixlq.core.net.RetrofitManager
+import top.cyixlq.core.utils.RxSchedulers
 import top.cyixlq.network.RetrofitClient
 import top.cyixlq.network.utils.getTypeToken
-import top.cyixlq.byapptemplate.bean.Result
-import top.cyixlq.core.utils.RxSchedulers
-import top.cyixlq.core.net.RetrofitManager
 
 class MainRepository(
     private val remote: MainRemoteDataSource = MainRemoteDataSource(),
@@ -33,7 +33,7 @@ class MainRemoteDataSource {
     fun getAddressList(sid: String): Flowable<Result<List<AddressItem>>> {
         return RetrofitClient.create().setType("BY_Address_all")
             .addParam("sid", sid)
-            .executeFlowable(getTypeToken<List<AddressItem>>())
+            .executeFlowable(typeToken = getTypeToken<List<AddressItem>>())
             .map { Result.success(it) }
             .onErrorReturn { Result.failure(it) }
     }

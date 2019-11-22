@@ -25,7 +25,9 @@ class MainViewModel(private val repo: MainRepository): BaseViewModel() {
                     when(it) { // 通过统一封装的Result类判断是否成功或是失败
                         is Result.Success -> { // 如果是成功，数据将在data中
                             when(it.data) { // 根据data的类型将数据post到UI界面
-                                is VersionData -> mViewStateSubject.postValue(MainViewState.create(isLoading = true, versionData = it.data))
+                                is VersionData -> mViewStateSubject.postValue(
+                                    MainViewState.create(isLoading = true, versionData = it.data)
+                                )
                                 is List<*> -> {
                                     if (it.data.isNotEmpty() && it.data[0] is AddressItem) { // 为了安全性和稳定性，严格校验
                                         mViewStateSubject.postValue(
