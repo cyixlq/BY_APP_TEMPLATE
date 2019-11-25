@@ -20,7 +20,7 @@ object CoreManager {
         readTimeOut: Long = 10,
         connectTimeOut: Long = 10,
         writeTimeOut: Long = 10,
-        baseUrl: String = ""
+        baseUrl: String
     ): CoreManager {
         RetrofitManager.config(
             NetWorkConfig(

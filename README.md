@@ -30,12 +30,14 @@
 1. 如果只引入了`core`模块，在自定义的Application中的onCreate方法加入以下代码：
 
     ```kotlin
+    
     CoreManager.init(this)
     ```
     
     你还可以继续配置`core`网络框架，在上面的代码加上下面的代码：
     
     ```kotlin
+    
     configNetWork(baseUrl = "https://music.ghpym.com", writeTimeOut = 10)
     ```
     
@@ -44,6 +46,7 @@
     还可以继续配置Log打印框架，在上面的代码加上下面的代码：
     
     ```kotlin
+    
     configCLog(isEnableLog = true, showThreadInfo = false)
     ```
     
@@ -52,6 +55,7 @@
 2. 如果只引入了`by_network`模块，在自定义的Application中的onCreate方法中先按照上面第1.步骤所示
 进行CoreManager的配置，然后添加以下代码：
     ```kotlin
+    
     ByNetWorkManager.getInstance().init()
     ```
 
@@ -62,20 +66,53 @@
 `core`模块引入了AutoDispose框架，在生命周期结束而自动断开与RxJava的连接只需一行代码：
 1. Activity中，必须继承自`core`模块中的BaseActivity，在RxJava流中添加如下Kotlin代码：
     ```kotlin
+    
     autoDisposable(scopeProvider)
     ```
 2. Fragment中，必须继承自`core`模块中的BaseFragment，在RxJava流中添加如下Kotlin代码：
     ```kotlin
+    
     autoDisposable(scopeProvider)
     ```
 3. ViewModel中，必须继承自`core`模块中的BaseViewModel，在RxJava流中添加如下Kotlin代码：
     ```kotlin
+    
     autoDisposable(this)
     ```
 **`by_network`模块配置**
 
 服务器公共参数配置文件位于`by_network`模块config包中，
 NetWorkConfig.kt文件为配置文件，已经添加相关注释，请自行更改。
+
+**`by_network`使用方式**
+重新改造，使用动态代理的方式，让你可以像使用Retrofit一样使用`by_network`
+1. 先使用interface声明网络请求接口：
+    ```kotlin
+    
+    interface EbuyService {
+        // 接口方法只能返回Flowable或者Observable
+        @Type("BY_Config_version")
+        fun getVersionData(@Param appid: String): Flowable<VersionData>
+    }
+    ```
+2. 使用ByNet.create()方法创建出Service对象，然后便可以进行网络请求：
+    ```kotlin
+    
+    ByNet.create(EbuyService::class.java)
+                .getVersionData("by565fa4facdb191")
+                .map { Result.success(it) }
+                .onErrorReturn { Result.failure(it) }
+    ```
+3. 注解介绍：
+
+    @Type：接口type，声明ebuy这种网络请求方式的接口类型（或者说是请求地址）
+    
+    @Param：接口中需要传的参数，Param的value可以省略，如果省略将以形参的名字作为传给后台的参数名
+    
+    @Params：接口中需要传的参数的键值对组，被其修饰的参数必须是HashMap<String, Object>类型，
+    用途：例如参数过多导致方法过长，如果不想全部写在接口方法中就可以使用此注解
+    
+    @ApiVersion：给接口指定apiVersion的值，一般这个值是字符串类型100，但是不保证后期所有接口都是100所以才有了此注解
 
 **其他亮点请自行阅读app模块下源码，一些设计保证了条理清晰，请遵循他们！**
 
