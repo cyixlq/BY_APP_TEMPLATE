@@ -56,7 +56,7 @@
 进行CoreManager的配置，然后添加以下代码：
     ```kotlin
     
-    ByNetWorkManager.getInstance().init()
+    ByNetWorkManager.init()
     ```
 
     另外，setConvert方法未展示，其作用是自定义参数加密解密的转换器，如果未设置将使用默认的转换器，其相关加密解密方法参照ebuy项目。如果需要自己设计实现，请参考`by_network`模块中的SampleConvert。
@@ -92,13 +92,13 @@ NetWorkConfig.kt文件为配置文件，已经添加相关注释，请自行更�
     interface EbuyService {
         // 接口方法只能返回Flowable或者Observable
         @Type("BY_Config_version")
-        fun getVersionData(@Param appid: String): Flowable<VersionData>
+        fun getVersionData(@Param("appid") appid: String): Flowable<VersionData>
     }
     ```
-2. 使用ByNet.create()方法创建出Service对象，然后便可以进行网络请求：
+2. 使用ByNet.get().create()方法创建出Service对象，然后便可以进行网络请求：
     ```kotlin
     
-    ByNet.create(EbuyService::class.java)
+    ByNet.get().create(EbuyService::class.java)
                 .getVersionData("by565fa4facdb191")
                 .map { Result.success(it) }
                 .onErrorReturn { Result.failure(it) }
@@ -107,7 +107,7 @@ NetWorkConfig.kt文件为配置文件，已经添加相关注释，请自行更�
 
     @Type：接口type，声明ebuy这种网络请求方式的接口类型（或者说是请求地址）
     
-    @Param：接口中需要传的参数，Param的value可以省略，如果省略将以形参的名字作为传给后台的参数名
+    @Param：接口中需要传的参数名
     
     @Params：接口中需要传的参数的键值对组，被其修饰的参数必须是HashMap<String, Object>类型，
     用途：例如参数过多导致方法过长，如果不想全部写在接口方法中就可以使用此注解
@@ -136,10 +136,12 @@ launch方法的实现参照TestActivity。
 
 2. 创建Fragment请不要在所需要的地方直接进行实例化，反例：
     ```kotlin
+    
     val testFragment = TestFragment()
     ```
     应当使用要创建的Fragment自身提供静态instance方法，正例：
     ```kotlin
+    
     class TestFragment: Fragment() {
         companion object {
             fun instance(title: String): TestFragment {

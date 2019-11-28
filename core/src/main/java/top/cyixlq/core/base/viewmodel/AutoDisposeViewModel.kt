@@ -80,7 +80,7 @@ open class AutoDisposeViewModel : ViewModel(), IViewModel, LifecycleScopeProvide
             when (event) {
                 ViewModelEvent.CREATED -> ViewModelEvent.CLEARED
                 else -> throw LifecycleEndedException(
-                        "Cannot bind to ViewModel lifecycle after onCleared.")
+                        "不能绑定ViewModel的生命周期在onCleared()执行之后")
             }
         }
     }

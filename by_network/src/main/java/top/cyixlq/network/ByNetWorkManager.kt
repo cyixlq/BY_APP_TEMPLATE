@@ -7,17 +7,7 @@ import top.cyixlq.network.convert.SampleConvert
 import top.cyixlq.network.service.CommonService
 
 
-class ByNetWorkManager private constructor(){
-    private object SingleHolder {
-        val instance = ByNetWorkManager()
-    }
-
-    companion object {
-        @JvmStatic
-        fun getInstance(): ByNetWorkManager {
-            return SingleHolder.instance
-        }
-    }
+object ByNetWorkManager {
 
     private var commonService: CommonService = RetrofitManager.getInstance().create(CommonService::class.java)
 
@@ -40,7 +30,7 @@ class ByNetWorkManager private constructor(){
         this.convert?.let {
             return it
         }
-        throw RuntimeException("You must init NetWorkManager")
+        throw RuntimeException("你必须初始化ByNetWorkManager")
     }
 
     fun getVersionName(): String {

@@ -6,8 +6,11 @@ import top.cyixlq.core.CoreManager
 
 object DisplayUtil {
 
+    /**
+     * 获取状态栏高度
+     */
     @SuppressLint("PrivateApi")
-    fun getStatusbarHeight(): Int {
+    fun getStatusBarHeight(): Int {
         var statusBarHeight = 0
         try {
             val c = Class.forName("com.android.internal.R\$dimen")
@@ -22,8 +25,11 @@ object DisplayUtil {
         return statusBarHeight
     }
 
+    /**
+     *  获取除去状态栏后屏幕的高度
+     */
     fun getScreenHeightExcludeStatusbar(context: Context): Int {
-        return context.resources.displayMetrics.heightPixels - getStatusbarHeight()
+        return context.resources.displayMetrics.heightPixels - getStatusBarHeight()
     }
 
     fun px2dp(pxValue: Float): Int {

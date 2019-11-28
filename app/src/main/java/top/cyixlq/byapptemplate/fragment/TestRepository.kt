@@ -17,8 +17,10 @@ class TestDataSourceRepository(
 
 class TestRemoteDataSource {
     fun getVersionDataNew(): Flowable<Result<VersionData>> {
-        return ByNet.create(EbuyService::class.java)
-            .getVersionData("by565fa4facdb191")
+        val map = HashMap<String, String>()
+        map["appid"] = "by565fa4facdb191"
+        return ByNet.get().create(EbuyService::class.java)
+            .getVersionData(map)
             .map { Result.success(it) }
             .onErrorReturn { Result.failure(it) }
     }

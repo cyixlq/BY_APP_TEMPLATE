@@ -2,7 +2,6 @@ package top.cyixlq.core
 
 import android.app.Application
 import top.cyixlq.core.net.RetrofitManager
-import top.cyixlq.core.net.bean.ConvertType
 import top.cyixlq.core.net.bean.NetWorkConfig
 import top.cyixlq.core.utils.CLog
 import java.lang.RuntimeException

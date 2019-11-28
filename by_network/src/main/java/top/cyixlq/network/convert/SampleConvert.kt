@@ -6,7 +6,7 @@ import top.cyixlq.network.utils.NetSecurityUtil
 
 class SampleConvert: IConvert {
 
-    // 将业务参数加密上传到服务器(其中attach为一些附加参数, 这一部分自己定义所需) [0]为type [1]为apiVersion
+    // 将业务参数加密上传到服务器(其中attach为一些附加参数, 这一部分自己定义所需) 这里的[0]为type [1]为apiVersion
     override fun encodeData(data: Map<String, Any>, vararg attach: String): HashMap<String, Any> {
         val paramsString = NetSecurityUtil.dataEncrypt(data)  // 将用户传入的键值对转换成json，加密后变为String
         val params = HashMap<String, Any>() // 重新封装成后台需要的数据格式
@@ -17,7 +17,7 @@ class SampleConvert: IConvert {
         params["time"] = timeStamp
         params["alg"] = ALG
         params["data"] = paramsString
-        params["app_version"] = ByNetWorkManager.getInstance().getVersionName()
+        params["app_version"] = ByNetWorkManager.getVersionName()
         params["lang"] = getLanguage()
         params["app_type"] = APP_TYPE
         val sign = NetSecurityUtil.getMD5Sign(timeStamp.toString(), attach[0], paramsString, CLIENT_SECRETE, timeStamp.toString())

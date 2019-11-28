@@ -17,7 +17,7 @@ class MainViewModel(private val repo: MainRepository): BaseViewModel() {
     @Suppress("UNCHECKED_CAST")
     fun getMainData() {
         // 若sid失效，请前往http://test.ebuycambodia.com/user/login重新获取
-        repo.getMainData("751652ace5577283f99edfcc6f42c1631")
+        repo.getMainData("377079aa6e2739bd7ceb6422f81cb2831")
             .startWith(Result.loading())
             .autoDisposable(this)
             .subscribe(
@@ -26,22 +26,20 @@ class MainViewModel(private val repo: MainRepository): BaseViewModel() {
                         is Result.Success -> { // 如果是成功，数据将在data中
                             when(it.data) { // 根据data的类型将数据post到UI界面
                                 is VersionData -> mViewStateSubject.postValue(
-                                    MainViewState.create(isLoading = true, versionData = it.data)
+                                    MainViewState.create(isLoading = false, versionData = it.data)
                                 )
                                 is List<*> -> {
-                                    if (it.data.isNotEmpty() && it.data[0] is AddressItem) { // 为了安全性和稳定性，严格校验
                                         mViewStateSubject.postValue(
                                             MainViewState.create(
-                                                isLoading = true,
+                                                isLoading = false,
                                                 addressList = it.data as List<AddressItem>
                                             )
                                         )
-                                    }
                                 }
                             }
                         }
                         // 失败的话错误就在error中
-                        is Result.Failure -> mViewStateSubject.postValue(MainViewState.create(throwable = it.error))
+                        is Result.Failure -> mViewStateSubject.postValue(MainViewState.create(isLoading = false, throwable = it.error))
                         // 如果是Loading类型就设置isLoading为true
                         is Result.Loading -> mViewStateSubject.postValue(MainViewState.create(isLoading = true))
                     }
