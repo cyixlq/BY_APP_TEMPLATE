@@ -26,11 +26,11 @@ class MainViewModel(private val repo: MainRepository): BaseViewModel() {
                         is Result.Success -> { // 如果是成功，数据将在data中
                             when(it.data) { // 根据data的类型将数据post到UI界面
                                 is VersionData -> mViewStateSubject.postValue(
-                                    MainViewState.create(isLoading = false, versionData = it.data)
+                                    MainViewState(isLoading = false, versionData = it.data)
                                 )
                                 is List<*> -> {
                                         mViewStateSubject.postValue(
-                                            MainViewState.create(
+                                            MainViewState(
                                                 isLoading = false,
                                                 addressList = it.data as List<AddressItem>
                                             )
@@ -39,9 +39,9 @@ class MainViewModel(private val repo: MainRepository): BaseViewModel() {
                             }
                         }
                         // 失败的话错误就在error中
-                        is Result.Failure -> mViewStateSubject.postValue(MainViewState.create(isLoading = false, throwable = it.error))
+                        is Result.Failure -> mViewStateSubject.postValue(MainViewState(isLoading = false, throwable = it.error))
                         // 如果是Loading类型就设置isLoading为true
-                        is Result.Loading -> mViewStateSubject.postValue(MainViewState.create(isLoading = true))
+                        is Result.Loading -> mViewStateSubject.postValue(MainViewState(isLoading = true))
                     }
                 },
                 {
@@ -49,7 +49,7 @@ class MainViewModel(private val repo: MainRepository): BaseViewModel() {
                 },
                 {
                     // 所有请求全部成功完成
-                    mViewStateSubject.postValue(MainViewState.create(isLoading = false))
+                    mViewStateSubject.postValue(MainViewState(isLoading = false))
                 }
             )
     }
@@ -61,12 +61,12 @@ class MainViewModel(private val repo: MainRepository): BaseViewModel() {
             .subscribe {
                 when(it) {
                     is Result.Success -> {
-                        mViewStateSubject.postValue(MainViewState.create(isLoading = false, musicUrl = it.data.string()))
+                        mViewStateSubject.postValue(MainViewState(isLoading = false, musicUrl = it.data.string()))
                     }
                     is Result.Failure -> {
-                        mViewStateSubject.postValue(MainViewState.create(isLoading = false, throwable = it.error))
+                        mViewStateSubject.postValue(MainViewState(isLoading = false, throwable = it.error))
                     }
-                    is Result.Loading -> mViewStateSubject.postValue(MainViewState.create(isLoading = true))
+                    is Result.Loading -> mViewStateSubject.postValue(MainViewState(isLoading = true))
                 }
             }
     }

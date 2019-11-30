@@ -18,13 +18,13 @@ class TestViewModel(private val repo: TestDataSourceRepository) : BaseViewModel(
             .subscribe {
                 when(it) {
                     is Result.Success -> {
-                        mViewState.postValue(TestViewState.create(isLoading = false, versionData = it.data))
+                        mViewState.postValue(TestViewState(isLoading = false, versionData = it.data))
                     }
                     is Result.Failure -> {
-                        mViewState.postValue(TestViewState.create(isLoading = false, throwable = it.error))
+                        mViewState.postValue(TestViewState(isLoading = false, throwable = it.error))
                     }
                     is Result.Loading -> {
-                        mViewState.postValue(TestViewState.create(isLoading = true))
+                        mViewState.postValue(TestViewState(isLoading = true))
                     }
                 }
             }

@@ -12,12 +12,12 @@ class TestViewModel(private val repo: TestDataSourceRepository) : BaseViewModel(
 
     fun getHotKeys(size: Int) {
         repo.getHotKeys(size)
-            .doOnSubscribe { mViewState.postValue(TestViewState.create(isLoading = true)) }
+            .doOnSubscribe { mViewState.postValue(TestViewState(isLoading = true)) }
             .autoDisposable(this)
             .subscribe({
-                mViewState.postValue(TestViewState.create(isLoading = false, hotKeys = it))
+                mViewState.postValue(TestViewState(isLoading = false, hotKeys = it))
             }, {
-                mViewState.postValue(TestViewState.create(isLoading = false, throwable = it))
+                mViewState.postValue(TestViewState(isLoading = false, throwable = it))
             })
     }
 }

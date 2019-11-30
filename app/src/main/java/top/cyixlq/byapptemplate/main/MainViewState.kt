@@ -9,15 +9,4 @@ data class MainViewState(
     val addressList: List<AddressItem>? = null,
     val versionData: VersionData? = null,
     val musicUrl: String? = null
-) {
-    companion object {
-        fun create(
-            isLoading: Boolean = false,
-            throwable: Throwable? = null,
-            addressList: List<AddressItem>? = null,
-            versionData: VersionData? = null,
-            musicUrl: String? = null
-        ): MainViewState =
-            MainViewState(isLoading, throwable, addressList, versionData, musicUrl)
-    }
-}
+)
