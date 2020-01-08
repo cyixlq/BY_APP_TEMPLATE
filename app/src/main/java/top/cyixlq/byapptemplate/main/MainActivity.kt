@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_main.*
 import top.cyixlq.byapptemplate.R
 import top.cyixlq.byapptemplate.test.TestActivity
-import top.cyixlq.core.base.activity.BaseActivity
+import top.cyixlq.core.common.activity.CommonActivity
 import top.cyixlq.core.utils.toastShort
 
-class MainActivity : BaseActivity() {
+class MainActivity : CommonActivity() {
 
     override val layoutId: Int = R.layout.activity_main
 

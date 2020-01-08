@@ -1,8 +1,8 @@
-package top.cyixlq.core.base.activity
+package top.cyixlq.core.common.activity
 
 import android.os.Bundle
 
-abstract class BaseActivity : AutoDisposeActivity() {
+abstract class CommonActivity : AutoDisposeActivity() {
 
     abstract val layoutId: Int
 

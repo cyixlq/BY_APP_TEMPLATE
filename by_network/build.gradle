@@ -14,9 +14,6 @@ android {
 
 dependencies {
     implementation rootProject.ext.support.kotlin
-    api rootProject.ext.dependencies.rxjava
-    api rootProject.ext.dependencies.rxandroid
-    api rootProject.ext.dependencies.rxkotlin
     api project(path: ':core')
 }
 repositories {

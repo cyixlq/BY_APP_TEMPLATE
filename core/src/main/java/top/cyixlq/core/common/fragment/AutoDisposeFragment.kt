@@ -1,10 +1,10 @@
-package top.cyixlq.core.base.activity
+package top.cyixlq.core.common.fragment
 
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 
-abstract class AutoDisposeActivity : AppCompatActivity() {
+abstract class AutoDisposeFragment : Fragment() {
 
     protected val scopeProvider: AndroidLifecycleScopeProvider by lazy {
         AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY)

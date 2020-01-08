@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.uber.autodispose.autoDisposable
 import top.cyixlq.byapptemplate.bean.Result
-import top.cyixlq.core.base.viewmodel.BaseViewModel
+import top.cyixlq.core.common.viewmodel.CommonViewModel
 
 @SuppressWarnings("checkResult")
-class TestViewModel(private val repo: TestDataSourceRepository) : BaseViewModel() {
+class TestViewModel(private val repo: TestDataSourceRepository) : CommonViewModel() {
     val mViewState = MutableLiveData<TestViewState>()
 
     fun getVersionDataNew() {

@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.uber.autodispose.autoDisposable
 import top.cyixlq.byapptemplate.bean.AddressItem
 import top.cyixlq.byapptemplate.bean.VersionData
-import top.cyixlq.core.base.viewmodel.BaseViewModel
 import top.cyixlq.byapptemplate.bean.Result
+import top.cyixlq.core.common.viewmodel.CommonViewModel
 
-class MainViewModel(private val repo: MainRepository): BaseViewModel() {
+class MainViewModel(private val repo: MainRepository): CommonViewModel() {
 
     val mViewStateSubject = MutableLiveData<MainViewState>()
 

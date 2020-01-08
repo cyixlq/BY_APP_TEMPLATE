@@ -12,6 +12,13 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        var i = 0
+        while (true) {
+            if (i % 2 == 1 && i % 3 == 0 && i % 4 == 1 && i % 5 == 4 && i % 6 == 3 && i % 7 == 0 && i % 8 == 1 && i % 9 == 0) {
+                println("result ==>$i")
+                break
+            }
+            i++
+        }
     }
 }

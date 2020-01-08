@@ -5,10 +5,10 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_test.*
-import top.cyixlq.core.base.fragment.BaseFragment
 import top.cyixlq.byapptemplate.R
+import top.cyixlq.core.common.fragment.CommonFragment
 
-class TestFragment : BaseFragment() {
+class TestFragment : CommonFragment() {
 
     private val mViewModel by lazy {
         ViewModelProviders.of(this, TestViewModelFactory(TestDataSourceRepository())).get(TestViewModel::class.java)

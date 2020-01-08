@@ -12,10 +12,10 @@
     - retrofit相关，转换器适配器等
     - Gson数据转换库
     - AutoDispose防止RxJava内存泄漏（此模块没有引入RxJava相关）
+    - 依赖了RxJava相关
 
 2. by_network(博也网络请求模块，适合ebuy这种网络请求方式)：
     - 依赖了core模块
-    - 依赖了RxJava相关
 
 ## 快速开始
 
@@ -64,17 +64,17 @@
 **防止RxJava内存泄漏：**
 
 `core`模块引入了AutoDispose框架，在生命周期结束而自动断开与RxJava的连接只需一行代码：
-1. Activity中，必须继承自`core`模块中的BaseActivity，在RxJava流中添加如下Kotlin代码：
+1. Activity中，必须继承自`core`模块中的CommonActivity，在RxJava流中添加如下Kotlin代码：
     ```kotlin
     
     autoDisposable(scopeProvider)
     ```
-2. Fragment中，必须继承自`core`模块中的BaseFragment，在RxJava流中添加如下Kotlin代码：
+2. Fragment中，必须继承自`core`模块中的CommonFragment，在RxJava流中添加如下Kotlin代码：
     ```kotlin
     
     autoDisposable(scopeProvider)
     ```
-3. ViewModel中，必须继承自`core`模块中的BaseViewModel，在RxJava流中添加如下Kotlin代码：
+3. ViewModel中，必须继承自`core`模块中的CommonViewModel，在RxJava流中添加如下Kotlin代码：
     ```kotlin
     
     autoDisposable(this)
@@ -162,6 +162,11 @@ launch方法的实现参照TestActivity。
 
 4. 请等待后续添加
 
-## 后话
-
-使用此项目模板遇到问题可以先提个issue，然后尝试自己修改源代码，如果问题得到解决还可以在提的issue中追加自己的解决方案。
+## 更新日志
+### 2020.01.08
+   - core库中BaseActivity、BaseFragment和BaseViewModel分别改名为
+   CommonActivity、CommonFragment、CommonViewModel，原因是开发者自己可能还需
+   要自定义一层Base，他们更喜欢用Base这个名称开头
+   - 以源代码的方式引入RxWeaver — 一款全局错误处理的库，原库地址以及使用方法:
+   [点我跳转](https://github.com/qingmei2/RxWeaver)
+   - 升级GradlePlugin版本，kotlin-gradle-plugin版本

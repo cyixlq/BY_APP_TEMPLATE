@@ -9,11 +9,11 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_test.*
 import top.cyixlq.byapptemplate.R
 import top.cyixlq.byapptemplate.fragment.TestFragment
-import top.cyixlq.core.base.activity.BaseActivity
+import top.cyixlq.core.common.activity.CommonActivity
 import top.cyixlq.core.utils.toastLong
 import top.cyixlq.core.utils.toastShort
 
-class TestActivity : BaseActivity() {
+class TestActivity : CommonActivity() {
 
     private val mViewModel by lazy {
         ViewModelProviders.of(this, TestViewModelFactory(TestDataSourceRepository())).get(TestViewModel::class.java)

@@ -1,11 +1,11 @@
-package top.cyixlq.core.base.fragment
+package top.cyixlq.core.common.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-abstract class BaseFragment : AutoDisposeFragment() {
+abstract class CommonFragment : AutoDisposeFragment() {
 
     private var mRootView: View? = null
 

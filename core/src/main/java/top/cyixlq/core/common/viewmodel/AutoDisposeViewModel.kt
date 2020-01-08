@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package top.cyixlq.core.base.viewmodel
+package top.cyixlq.core.common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.uber.autodispose.lifecycle.CorrespondingEventsFunction
