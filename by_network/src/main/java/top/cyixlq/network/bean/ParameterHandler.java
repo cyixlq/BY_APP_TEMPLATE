@@ -45,4 +45,18 @@ abstract class ParameterHandler {
             }*/
         }
     }
+
+    static final class Arg extends ParameterHandler {
+
+        private String key;
+
+        Arg(@NotNull String key) {
+            this.key = key;
+        }
+
+        @Override
+        void apply(RetrofitClient client, Object value) {
+            client.addCustomArg(key, value);
+        }
+    }
 }

@@ -12,9 +12,11 @@ import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import top.cyixlq.network.RetrofitClient;
 import top.cyixlq.network.annotion.ApiVersion;
+import top.cyixlq.network.annotion.Arg;
 import top.cyixlq.network.annotion.Param;
 import top.cyixlq.network.annotion.Params;
 import top.cyixlq.network.annotion.Type;
+import top.cyixlq.network.annotion.Url;
 
 import static top.cyixlq.network.config.NetWorkConfigKt.API_VERSION;
 
@@ -50,6 +52,7 @@ public class ServiceMethod {
         throw new IllegalArgumentException(method.getName() + "方法的返回类型必须是Observable<T>或者Flowable<T>");
     }
 
+    // 获取泛型中的类型对象，摘自Retrofit
     private java.lang.reflect.Type getParameterUpperBound(ParameterizedType type) {
         java.lang.reflect.Type[] types = type.getActualTypeArguments();
         java.lang.reflect.Type paramType = types[0];
@@ -80,9 +83,10 @@ public class ServiceMethod {
             final int parameterCount = parameterAnnotationsArray.length;
             parameterHandlers = new ParameterHandler[parameterCount];
             for(int p = 0; p < parameterCount; p++) {
+                // 获取第p个参数上面的所有注解，所以是一个数组
                 final Annotation[] parameterAnnotations = parameterAnnotationsArray[p];
-                if (parameterAnnotations == null) {
-                    throw new IllegalArgumentException(method.getName() + "：方法参数必须加上@Param或者@Params注解");
+                if (parameterAnnotations == null || parameterAnnotations.length == 0) {
+                    throw new IllegalArgumentException(method.getName() + "：方法所有形参必须加上@Param、@Params或@Arg注解");
                 }
                 parameterHandlers[p] = parseParameter(p, parameterAnnotations);
             }
@@ -94,12 +98,14 @@ public class ServiceMethod {
             ParameterHandler result = null;
             for (Annotation parameterAnnotation : parameterAnnotations) {
                 ParameterHandler annotationAction = parseParameterAnnotation(parameterAnnotation);
+                // 如果这个注解不支持那就下一个
                 if (annotationAction == null) continue;
+                // 找到了一个支持的注解
                 result = annotationAction;
             }
-            // 如果这第p+1个参数没有@Param或者@Params其中任意一个注解则抛出异常
+            // 全部注解遍历完，还是没有一个支持的注解
             if (result == null) {
-                throw new IllegalArgumentException("第" + (p + 1) + "方法参数必须加上@Param或者@Params注解");
+                throw new IllegalArgumentException(method.getName() + "第" + (p + 1) + "个方法形参必须加上@Param、@Params或@Arg注解");
             }
             return result;
         }
@@ -112,19 +118,31 @@ public class ServiceMethod {
                 return new ParameterHandler.Param(param.value());
             } else if (parameterAnnotation instanceof Params) {
                 return new ParameterHandler.Params();
+            } else if (parameterAnnotation instanceof Arg) {
+                Arg arg = (Arg) parameterAnnotation;
+                return new ParameterHandler.Arg(arg.value());
             }
             return null;
         }
 
         private void parseMethodAnnotation(Method method) {
+            // 处理方法体上的Type注解
             final Type typeAnnotation = method.getAnnotation(Type.class);
             if (typeAnnotation == null) throw new IllegalArgumentException(method.getName() +"方法必须要有一个@Type注解");
             client.setType(typeAnnotation.value());
+
+            // 处理方法体上的ApiVersion注解
             final ApiVersion apiVersionAnnotation = method.getAnnotation(ApiVersion.class);
             if (apiVersionAnnotation != null && !apiVersionAnnotation.value().isEmpty()) {
                 client.setApiVersion(apiVersionAnnotation.value());
             } else {
                 client.setApiVersion(API_VERSION);
+            }
+
+            // 处理方法体上的Url注解
+            final Url urlAnnotation = method.getAnnotation(Url.class);
+            if (urlAnnotation != null && !urlAnnotation.value().isEmpty()) {
+                client.setUrl(urlAnnotation.value());
             }
         }
 

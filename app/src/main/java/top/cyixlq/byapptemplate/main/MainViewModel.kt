@@ -70,6 +70,25 @@ class MainViewModel(private val repo: MainRepository): CommonViewModel() {
                 }
             }
     }
+
+    fun getHospitalBanner() {
+        repo.getHospitalBanner("00P007001")
+            .startWith(Result.loading())
+            .autoDisposable(this)
+            .subscribe {
+                when(it) {
+                    is Result.Success -> {
+                        mViewStateSubject.postValue(MainViewState(isLoading = false, banners = it.data))
+                    }
+                    is Result.Failure -> {
+                        mViewStateSubject.postValue(MainViewState(isLoading = false, throwable = it.error))
+                    }
+                    is Result.Loading -> {
+                        mViewStateSubject.postValue(MainViewState(isLoading = true))
+                    }
+                }
+            }
+    }
 }
 
 class MainViewModelFactory(private val repo: MainRepository) : ViewModelProvider.Factory {

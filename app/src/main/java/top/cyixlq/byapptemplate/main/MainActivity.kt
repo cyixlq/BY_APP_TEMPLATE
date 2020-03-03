@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import top.cyixlq.byapptemplate.R
 import top.cyixlq.byapptemplate.test.TestActivity
 import top.cyixlq.core.common.activity.CommonActivity
+import top.cyixlq.core.utils.ToastUtil
 import top.cyixlq.core.utils.toastShort
 
 class MainActivity : CommonActivity() {
@@ -50,6 +51,15 @@ class MainActivity : CommonActivity() {
             if (it.throwable != null) {
                 it.throwable.localizedMessage.toastShort()
             }
+            if (it.banners != null) {
+                for (banner in it.banners) {
+                    ToastUtil.showShort(banner.title)
+                }
+            }
         })
+    }
+
+    fun getHospitalBanner(view: View) {
+        mViewModel.getHospitalBanner()
     }
 }

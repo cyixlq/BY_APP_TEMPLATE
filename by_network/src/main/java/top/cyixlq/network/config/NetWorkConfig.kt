@@ -1,5 +1,8 @@
 package top.cyixlq.network.config
 
+// 请求根网址
+const val INDEX_URL = "/index.php"
+
 // 服务器端需要的公共参数
 const val CLIENT_ID = "by565fa4facdb191"
 const val ALG = "md5"
@@ -13,3 +16,7 @@ fun getLanguage(): String {
 // 服务器标识码
 const val RESULT_OK = 0 // 返回成功（正常）
 const val SERVICE_ERR = -1 // 服务器异常标志码
+
+// 日志标签
+const val TAG_PARAMS = "NetWork_Params"
+const val TAG_RESPONSE = "NetWork_Response"

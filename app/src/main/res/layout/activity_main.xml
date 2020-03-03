@@ -32,6 +32,13 @@
             android:text="获取音乐地址"
             tools:ignore="HardcodedText" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请求金普医院数据"
+            android:onClick="getHospitalBanner"
+            tools:ignore="HardcodedText" />
+
         <TextView
             android:id="@+id/tvVersionData"
             android:layout_width="wrap_content"

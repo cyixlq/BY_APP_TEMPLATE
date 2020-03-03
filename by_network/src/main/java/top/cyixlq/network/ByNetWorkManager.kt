@@ -13,9 +13,15 @@ object ByNetWorkManager {
 
     private var convert: IConvert? = null
     private var version = "un_know"
+    private var globalCustomArgs: HashMap<String, Any>? = null
 
     fun setConvert(convert: IConvert): ByNetWorkManager {
         this.convert = convert
+        return this
+    }
+
+    fun setGlobalCustomArgs(args: HashMap<String, Any>): ByNetWorkManager {
+        this.globalCustomArgs = args
         return this
     }
 
@@ -31,6 +37,10 @@ object ByNetWorkManager {
             return it
         }
         throw RuntimeException("你必须初始化ByNetWorkManager")
+    }
+
+    fun getGlobalCustomArgs(): HashMap<String, Any>? {
+        return this.globalCustomArgs
     }
 
     fun getVersionName(): String {
